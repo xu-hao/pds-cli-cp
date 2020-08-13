@@ -1,45 +1,9 @@
-[![Build Status](https://travis-ci.com/RENCI/pdspi-mapper-parallex-example.svg?branch=master)](https://travis-ci.com/RENCI/pdspi-mapper-parallex-example)
-
-# pdspi-mapper-parallex-example
+# pdspi-cli-cp
 
 ## prerequisites
  python 3.8 or higher
 
-## configuration
-
-edit `tests/docker.env`
-
-Put your spec under `config`. Put your custom python functions under a sub dir in that dir. Any python module under the sub dir can be imported in your spec. Your spec should output the format that the api specifies.
-
-## utility functions for building python functions that can be used to build the spec
-
-use `query_records_closest_before` to get records closest before date; 
-
-use `query_records_closest_after` to get records closest after date; 
-
-use `query_records_closest` to get records closest to date; 
-
-`query_records_interval` can take a start/end time
-
-look at extant function for examples you can reuse
-
-## start
-```
-./up.sh
-```
-
-## stop
-```
-./down.sh
-```
-## api
-`modelParameters`
-
-`specName`: spec name is a file name relative to the `config`
-
-`libraryPath`: library path relative to the `config` dir
-
-# cli tools
+## cli
 
 To use the cli tools, put your spec under `config`. Put your custom python functions under a sub dir in that dir. There is a `cli.py`. You can run it as
 
