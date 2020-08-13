@@ -3,7 +3,7 @@
 ## prerequisites
  python 3.8 or higher
 
-## cli
+## how to run the code
 
 To use the cli tools, put your spec under `config`. Put your custom python functions under a sub dir in that dir. There is a `cli.py`. You can run it as
 
