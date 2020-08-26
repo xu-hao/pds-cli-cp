@@ -14,7 +14,7 @@ python cli.py <file containing your spec> <sub dir containing custom python func
 For example
 
 ```
-python cli.py spec.py modules 4 1 ../resourceTypes.yaml ../patientIds.yaml "2000-01-01T00:00:00Z" 8080 8081
+python cli.py spec.py --libraryPath module --nthreads 4 --level 1 ../resourceTypes.yaml ../patientIds.yaml "2000-01-01T00:00:00Z" --pdsPort 8080 --configDir ../pdspi-mapper-parallex-example/config
 ```
 
 In this example, you would put your spec in `config/spec.py`. Any python module under the `config/modules` directory can be imported in your spec. For example, if you have `config/modules/clivar.py`, you can reference functions in that module in various ways, for example `from clivar import *`. `../resourceTypes.yaml` contains a list of resource types. `../patientIds.yaml` contains a list of patient ids. Your spec should output the format that the api specifies. See `config/spec4.py`'s `return` statement for example. `<level>` specifies the number of nested for loops to parallelize.
