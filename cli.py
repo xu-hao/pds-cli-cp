@@ -4,10 +4,38 @@ import sys
 import yaml
 import requests
 import time
+import argparse
+import shutil
 
-specName, libraryPath, nthreads, level, resourceTypesFile, patientIdsFile, timestamp, pdsPort = sys.argv[1:]
+parser = argparse.ArgumentParser(description='pds cli for cp')
+parser.add_argument('specName', help='spec name')
+parser.add_argument('--libraryPath', nargs="*", help='python module path')
+parser.add_argument('--nthreads', type=int, default=4, help='number of threads')
+parser.add_argument('--level', type=int, default=0, help='level')
+parser.add_argument('resourceTypesFile', help='resource types file')
+parser.add_argument('patientIdsFile', help='patient id files')
+parser.add_argument('timestamp', help='timestamp')
+parser.add_argument('--pdsHost', default="localhost", help='pds host')
+parser.add_argument('--pdsPort', type=int, default=8080, help='pds port')
+parser.add_argument('--configDir', help='config dir')
 
-nthreadsint = int(nthreads)
+args = parser.parse_args()
+
+specName = args.specName
+libraryPath = args.libraryPath
+nthreads = args.nthreads
+level = args.level
+resourceTypesFile = args.resourceTypesFile
+patientIdsFile = args.patientIdsFile
+timestamp = args.timestamp
+pdsPort = args.pdsPort
+pdsHost = args.pdsHost
+configDir = args.configDir
+
+if configDir is not None:
+    shutil.copy(f"config/{specName}", configDir)
+    for p in libraryPath:
+        shutil.copytree(f"config/{p}", f"{configDir}/{p}", dirs_exists_ok=True)
 
 with open(patientIdsFile) as f:
     patientIds = yaml.safe_load(f)
@@ -48,10 +76,10 @@ resp = requests.post(f"http://localhost:{pdsPort}/v1/plugin/pdspi-mapper-paralle
         }, {
             "id": "level",
             "parameterValue": {"value": level}
-        }] + ([] if libraryPath == "" else [{
+        }, {
             "id": "libraryPath",
             "parameterValue": {"value": libraryPath}
-        }])
+        }]
     },
     "patientVariables": [],
     "patientIds": patientIds,
